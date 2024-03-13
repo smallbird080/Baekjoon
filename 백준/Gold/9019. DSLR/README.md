@@ -130,6 +130,6 @@ int main(){
 
 ### 해결 방안
 
-BFS 구현방식 찾아보고 전환 (Node class -> queue<pair>)
+BFS 구현방식 찾아보고 전환 (Node class -> queue<pair>), 서로 다른 경로를 통해 같은 값을 가진 노드로 이동할 가능성 발견 => 방문한 노드 체크
 
 string형이 기본 24byte 차지하는 것 알게 됨 => A,B를 int 형으로 받음, L,R 연산방법 찾음
