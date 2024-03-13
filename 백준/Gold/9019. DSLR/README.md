@@ -44,3 +44,92 @@
 
  <p>A에서 B로 변환하기 위해 필요한 최소한의 명령어 나열을 출력한다. 가능한 명령어 나열이 여러가지면, 아무거나 출력한다.</p>
 
+### 실패했던 코드 (메모리 초과)
+
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+string addZero(string str){
+    for(int i=0; i<4-str.length(); i++){
+        str = "0"+str;
+    }
+    return str;
+}
+
+class Node{
+    public:
+        string _data, _history;
+        Node(string data, string history){_data = data; _history = history;}
+        string D(){
+            int temp = stoi(_data);
+            temp *= 2;
+            if (temp>9999)
+                temp %= 10000;
+            return addZero(to_string(temp));
+        }
+        string S(){
+            int temp = stoi(_data);
+            temp -= 1;
+            if (temp == -1)
+                temp = 9999;
+            return addZero(to_string(temp));
+        }
+        string L(){
+            string result = _data;
+            result[0] = _data[1];
+            result[1] = _data[2];
+            result[2] = _data[3];
+            result[3] = _data[0];
+            return result;
+        }
+        string R(){
+            string result = _data;
+            result[0] = _data[3];
+            result[1] = _data[0];
+            result[2] = _data[1];
+            result[3] = _data[2];
+            return result;
+        }
+};
+
+int main(){
+    string A, B;
+    string answer;
+    int numCases;
+    cin>>numCases;
+    for(int i=0; i<numCases; i++){
+        queue<Node*> q;
+        cin>>A>>B;
+        A = addZero(A);
+        B = addZero(B);
+        Node* currentNode = new Node(A, "");
+        while(currentNode->_data != B){
+            q.push(new Node(currentNode->D(), currentNode->_history+"D"));
+            q.push(new Node(currentNode->S(), currentNode->_history+"S"));
+            q.push(new Node(currentNode->L(), currentNode->_history+"L"));
+            q.push(new Node(currentNode->R(), currentNode->_history+"R"));
+            delete currentNode;
+            currentNode = q.front();
+            q.pop();
+        }
+        answer = currentNode->_history;
+	int size = q.size();
+        for (int j=0; j<size; j++){
+            delete q.front();
+            q.pop();
+        }
+        cout<<answer<<endl;
+    }
+}
+```
+
+### 해결 방안
+
+BFS 구현방식 찾아보고 전환 (Node class -> queue<pair>)
+
+string형이 기본 24byte 차지하는 것 알게 됨 => A,B를 int 형으로 받음, L,R 연산방법 찾음
