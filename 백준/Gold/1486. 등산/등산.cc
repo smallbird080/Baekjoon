@@ -17,9 +17,9 @@ int main(){
         cin >> str;
         for (int j=0; j<m; j++){
             if (str[j] < 91)
-                map[i*m+j] = str[j]-65; // Corrected index calculation
+                map[i*m+j] = str[j]-65;
             else
-                map[i*m+j] = str[j]-97+26; // Corrected index calculation
+                map[i*m+j] = str[j]-97+26;
         }
     }
 
@@ -28,16 +28,16 @@ int main(){
         w[i] = new int[n*m];
         for (int j=0; j<n*m; j++){
             if (i % m > 0 && j == i-1 && abs(map[j] - map[i]) <= t){
-                w[i][j] = map[i] >= map[j] ? 1 : static_cast<int>(pow(map[j] - map[i], 2)); // Cast to int
+                w[i][j] = map[i] >= map[j] ? 1 : static_cast<int>(pow(map[j] - map[i], 2));
             }
             else if (i / m > 0 && j == i-m && abs(map[j] - map[i]) <= t){
-                w[i][j] = map[i] >= map[j] ? 1 : static_cast<int>(pow(map[j] - map[i], 2)); // Cast to int
+                w[i][j] = map[i] >= map[j] ? 1 : static_cast<int>(pow(map[j] - map[i], 2)); 
             }
             else if (i % m < m-1 && j == i+1 && abs(map[j] - map[i]) <= t){
-                w[i][j] = map[i] >= map[j] ? 1 : static_cast<int>(pow(map[j] - map[i], 2)); // Cast to int
+                w[i][j] = map[i] >= map[j] ? 1 : static_cast<int>(pow(map[j] - map[i], 2));
             }
             else if (i / m < n-1 && j == i+m && abs(map[j] - map[i]) <= t){
-                w[i][j] = map[i] >= map[j] ? 1 : static_cast<int>(pow(map[j] - map[i], 2)); // Cast to int
+                w[i][j] = map[i] >= map[j] ? 1 : static_cast<int>(pow(map[j] - map[i], 2));
             }
             else
                 w[i][j] = 9999999;
